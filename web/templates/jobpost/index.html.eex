@@ -1,0 +1,40 @@
+<h2>Listing jobposts</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>User</th>
+      <th> title</th>
+      <th>Description</th>
+      <th>Organization</th>
+      <th>Email</th>
+      <th>Location</th>
+      <th>Url</th>
+      <th>Contact</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for jobpost <- @jobposts do %>
+    <tr>
+      <td><%= jobpost.user_id %></td>
+      <td><%= jobpost.title %></td>
+      <td><%= jobpost.description %></td>
+      <td><%= jobpost.organization %></td>
+      <td><%= jobpost.email %></td>
+      <td><%= jobpost.location %></td>
+      <td><%= jobpost.url %></td>
+      <td><%= jobpost.contact %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: jobpost_path(@conn, :show, jobpost), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: jobpost_path(@conn, :edit, jobpost), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: jobpost_path(@conn, :delete, jobpost), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New jobpost", to: jobpost_path(@conn, :new) %>

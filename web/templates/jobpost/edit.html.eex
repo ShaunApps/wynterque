@@ -1,0 +1,6 @@
+<h2>Edit jobpost</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: jobpost_path(@conn, :update, @jobpost) %>
+
+<%= link "Back", to: jobpost_path(@conn, :index) %>

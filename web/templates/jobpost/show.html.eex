@@ -1,0 +1,48 @@
+<h2>Show jobpost</h2>
+
+<ul>
+
+  <li>
+    <strong>User:</strong>
+    <%= @jobpost.user_id %>
+  </li>
+
+  <li>
+    <strong> title:</strong>
+    <%= @jobpost. title %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @jobpost.description %>
+  </li>
+
+  <li>
+    <strong>Organization:</strong>
+    <%= @jobpost.organization %>
+  </li>
+
+  <li>
+    <strong>Email:</strong>
+    <%= @jobpost.email %>
+  </li>
+
+  <li>
+    <strong>Location:</strong>
+    <%= @jobpost.location %>
+  </li>
+
+  <li>
+    <strong>Url:</strong>
+    <%= @jobpost.url %>
+  </li>
+
+  <li>
+    <strong>Contact:</strong>
+    <%= @jobpost.contact %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: jobpost_path(@conn, :edit, @jobpost) %>
+<%= link "Back", to: jobpost_path(@conn, :index) %>

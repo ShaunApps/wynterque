@@ -20,6 +20,7 @@ defmodule Wynterque.Router do
     get "/", PageController, :index
     resources "/users", UserController, only: [:index, :show, :new, :create, :edit, :delete]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
+    resources "/jobposts", JobpostController
   end
 
   # Other scopes may use custom stacks.
