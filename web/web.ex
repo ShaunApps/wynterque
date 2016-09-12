@@ -36,6 +36,7 @@ defmodule Wynterque.Web do
 
       import Wynterque.Router.Helpers
       import Wynterque.Gettext
+      import Wynterque.Auth, only: [authenticate_user: 2]
     end
   end
 
@@ -58,6 +59,8 @@ defmodule Wynterque.Web do
   def router do
     quote do
       use Phoenix.Router
+
+      import Wynterque.Auth, only: [authenticate_user: 2]
     end
   end
 

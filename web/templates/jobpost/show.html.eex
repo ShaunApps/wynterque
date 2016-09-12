@@ -1,48 +1,50 @@
-<h2>Show jobpost</h2>
 
-<ul>
 
-  <li>
+<div class="col-xs-4 .col-sm-2"> </div>
+<div class="col-xs-6 .col-sm-4">
+
+  <p>
     <strong>User:</strong>
     <%= @jobpost.user_id %>
-  </li>
+  </p>
 
-  <li>
-    <strong> title:</strong>
-    <%= @jobpost. title %>
-  </li>
+  <p>
+    <strong>Title:</strong>
+    <%= @jobpost.title %>
+  </p>
 
-  <li>
+  <p>
     <strong>Description:</strong>
     <%= @jobpost.description %>
-  </li>
+  </p>
 
-  <li>
+  <p>
     <strong>Organization:</strong>
     <%= @jobpost.organization %>
-  </li>
+  </p>
 
-  <li>
+  <p>
     <strong>Email:</strong>
     <%= @jobpost.email %>
-  </li>
+  </p>
 
-  <li>
+  <p>
     <strong>Location:</strong>
     <%= @jobpost.location %>
-  </li>
+  </p>
 
-  <li>
+  <p>
     <strong>Url:</strong>
     <%= @jobpost.url %>
-  </li>
+  </p>
 
-  <li>
+  <p>
     <strong>Contact:</strong>
     <%= @jobpost.contact %>
-  </li>
+  </p>
 
-</ul>
 
-<%= link "Edit", to: jobpost_path(@conn, :edit, @jobpost) %>
-<%= link "Back", to: jobpost_path(@conn, :index) %>
+  <%= if @current_user do %> <%= link "Edit", to: jobpost_path(@conn, :edit, @jobpost) %> <% end %>
+  <%= link "Back", to: jobpost_path(@conn, :index) %>
+
+</div>

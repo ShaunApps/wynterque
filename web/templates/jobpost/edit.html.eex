@@ -1,4 +1,4 @@
-<h2>Edit jobpost</h2>
+<h2>Edit Job Post</h2>
 
 <%= render "form.html", changeset: @changeset,
                         action: jobpost_path(@conn, :update, @jobpost) %>
