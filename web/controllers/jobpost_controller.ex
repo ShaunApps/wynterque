@@ -8,13 +8,20 @@ defmodule Wynterque.JobpostController do
     render(conn, "index.html", jobposts: jobposts)
   end
 
-  def new(conn, _params) do
-    changeset = Jobpost.changeset(%Jobpost{})
+  def new(conn, _params, user) do
+    changeset =
+      user
+      |> build_assoc(:jobposts)
+      |> Jobpost.changeset()
+
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, %{"jobpost" => jobpost_params}) do
-    changeset = Jobpost.changeset(%Jobpost{}, jobpost_params)
+  def create(conn, %{"jobpost" => jobpost_params}, user) do
+    changeset =
+      user
+      |> build_assoc(:jobposts)
+      |> Jobpost.changeset(jobpost_params)
 
     case Repo.insert(changeset) do
       {:ok, _jobpost} ->
@@ -24,6 +31,11 @@ defmodule Wynterque.JobpostController do
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
+  end
+
+  def action(conn, _) do
+    apply(__MODULE__, action_name(conn),
+      [conn, conn.params, conn.assigns.current_user])
   end
 
   def show(conn, %{"id" => id}) do

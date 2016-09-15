@@ -23,6 +23,12 @@ defmodule Wynterque.Router do
     resources "/jobposts", JobpostController
   end
 
+  scope "/manage", Wynterque do
+    pipe_through [:browser, :authenticate_user]
+    
+    resources "/jobposts", JobpostController
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", Wynterque do
   #   pipe_through :api

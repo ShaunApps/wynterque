@@ -13,7 +13,6 @@
   </head>
 
   <body>
-    <div class="container">
       <nav class="navbar navbar-inverse">
         <div class="container-fluid">
           <div class="navbar-header">
@@ -27,7 +26,7 @@
           </div>
 
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav navbar-center">
               <li><%= link "Job Listings", to: jobpost_path(@conn, :index) %></li>
               <li><%= link "Post a Job", to: jobpost_path(@conn, :new) %></li>
               <li class="dropdown">
@@ -66,6 +65,7 @@
           </div>
         </div>
       </nav>
+      <div class="container">
 
       <main role="main">
         <%= render @view_module, @view_template, assigns %>
