@@ -9,3 +9,10 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+alias Wynterque.Repo
+alias Wynterque.Category
+
+for category <- ~w(Javascript, Ruby, Python, PHP) do
+  Repo.get_by(Category, name: category) ||
+    Repo.insert!(%Category{name: category})
+end

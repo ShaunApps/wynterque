@@ -10,6 +10,7 @@ defmodule Wynterque.Jobpost do
     field :url, :string
     field :contact, :string
     belongs_to :user, Wynterque.User
+    belongs_to :category, Wynterque.Category
 
     timestamps()
   end
@@ -19,7 +20,7 @@ defmodule Wynterque.Jobpost do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:title, :description, :organization, :email, :location, :url, :contact])
+    |> cast(params, [:title, :description, :organization, :email, :location, :url, :contact, :category_id])
     |> validate_required([:title, :description, :organization, :email, :location, :url, :contact])
   end
 end

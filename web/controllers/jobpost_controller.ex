@@ -65,7 +65,6 @@ defmodule Wynterque.JobpostController do
 
   def delete(conn, %{"id" => id}, user) do
     jobpost = Repo.get!(user_jobposts(user), id)
-
     Repo.delete!(jobpost)
 
     conn
