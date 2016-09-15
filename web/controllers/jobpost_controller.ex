@@ -3,8 +3,8 @@ defmodule Wynterque.JobpostController do
 
   alias Wynterque.Jobpost
 
-  def index(conn, _params) do
-    jobposts = Repo.all(Jobpost)
+  def index(conn, _params, user) do
+    jobposts = Repo.all(user_jobposts(user))
     render(conn, "index.html", jobposts: jobposts)
   end
 
@@ -38,8 +38,8 @@ defmodule Wynterque.JobpostController do
       [conn, conn.params, conn.assigns.current_user])
   end
 
-  def show(conn, %{"id" => id}) do
-    jobpost = Repo.get!(Jobpost, id)
+  def show(conn, %{"id" => id}, user) do
+    jobpost = Repo.get!(user_jobposts(user), id)
     render(conn, "show.html", jobpost: jobpost)
   end
 
@@ -63,15 +63,17 @@ defmodule Wynterque.JobpostController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    jobpost = Repo.get!(Jobpost, id)
+  def delete(conn, %{"id" => id}, user) do
+    jobpost = Repo.get!(user_jobposts(user), id)
 
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
     Repo.delete!(jobpost)
 
     conn
     |> put_flash(:info, "Jobpost deleted successfully.")
     |> redirect(to: jobpost_path(conn, :index))
+  end
+
+  defp user_jobposts(user) do
+    assoc(user, :jobposts)
   end
 end
