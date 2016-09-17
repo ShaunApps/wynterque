@@ -2,6 +2,9 @@ defmodule Wynterque.JobpostController do
   use Wynterque.Web, :controller
 
   alias Wynterque.Jobpost
+  alias Wynterque.Category
+
+  plug :load_categories when action in [:new, :create, :edit, :update]
 
   def index(conn, _params, user) do
     jobposts = Repo.all(user_jobposts(user))
@@ -43,14 +46,14 @@ defmodule Wynterque.JobpostController do
     render(conn, "show.html", jobpost: jobpost)
   end
 
-  def edit(conn, %{"id" => id}) do
-    jobpost = Repo.get!(Jobpost, id)
+  def edit(conn, %{"id" => id}, user) do
+    jobpost = Repo.get!(user_jobposts(user), id)
     changeset = Jobpost.changeset(jobpost)
     render(conn, "edit.html", jobpost: jobpost, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "jobpost" => jobpost_params}) do
-    jobpost = Repo.get!(Jobpost, id)
+  def update(conn, %{"id" => id, "jobpost" => jobpost_params}, user) do
+    jobpost = Repo.get!(user_jobposts(user), id)
     changeset = Jobpost.changeset(jobpost, jobpost_params)
 
     case Repo.update(changeset) do
@@ -74,5 +77,14 @@ defmodule Wynterque.JobpostController do
 
   defp user_jobposts(user) do
     assoc(user, :jobposts)
+  end
+
+  defp load_categories(conn, _) do
+    query =
+      Category
+      |> Category.alphabetical
+      |> Category.names_and_ids
+    categories = Repo.all query
+    assign(conn, :categories, categories)
   end
 end

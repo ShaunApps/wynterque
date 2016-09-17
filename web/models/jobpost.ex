@@ -22,5 +22,6 @@ defmodule Wynterque.Jobpost do
     struct
     |> cast(params, [:title, :description, :organization, :email, :location, :url, :contact, :category_id])
     |> validate_required([:title, :description, :organization, :email, :location, :url, :contact])
+    |> assoc_constraint(:category)
   end
 end

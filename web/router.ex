@@ -20,12 +20,11 @@ defmodule Wynterque.Router do
     get "/", PageController, :index
     resources "/users", UserController, only: [:index, :show, :new, :create, :edit, :delete]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
-    resources "/jobposts", JobpostController
   end
 
   scope "/manage", Wynterque do
     pipe_through [:browser, :authenticate_user]
-    
+
     resources "/jobposts", JobpostController
   end
 
