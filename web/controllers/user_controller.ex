@@ -29,7 +29,7 @@ defmodule Wynterque.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    user = Repo.get!(User, id)
+    user = Repo.get(User, id)
     render(conn, "show.html", user: user)
   end
 

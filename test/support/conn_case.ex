@@ -26,6 +26,7 @@ defmodule Wynterque.ConnCase do
       import Ecto.Query
 
       import Wynterque.Router.Helpers
+      import Wynterque.TestHelpers
 
       # The default endpoint for testing
       @endpoint Wynterque.Endpoint
