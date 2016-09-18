@@ -19,6 +19,28 @@ defmodule Wynterque.JobpostControllerTest do
   end
 
   @tag login_as: "max"
+  test "authorizes actions against access by other users",
+    %{user: owner, conn: conn} do
+
+    jobpost = insert_jobpost(owner, @valid_attrs)
+    non_owner = insert_user(username: "sneaky")
+    conn = assign(conn, :current_user, non_owner)
+
+    assert_error_sent :not_found, fn ->
+      get(conn, jobpost_path(conn, :show, jobpost))
+    end
+    assert_error_sent :not_found, fn ->
+      get(conn, jobpost_path(conn, :edit, jobpost))
+    end
+    assert_error_sent :not_found, fn ->
+      put(conn, jobpost_path(conn, :update, jobpost, jobpost: @valid_attrs))
+    end
+    assert_error_sent :not_found, fn ->
+      delete(conn, jobpost_path(conn, :delete, jobpost))
+    end
+  end
+
+  @tag login_as: "max"
   test "lists all user's jobposts on index", %{conn: conn, user: user} do
     user_jobpost = insert_jobpost(user, title: "Javascript Developer")
     other_jobpost = insert_jobpost(insert_user(username: "other"), title: "another job")
