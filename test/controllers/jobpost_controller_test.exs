@@ -1,6 +1,13 @@
 defmodule Wynterque.JobpostControllerTest do
   use Wynterque.ConnCase
 
+  alias Wynterque.Jobpost
+  @valid_attrs %{url: "www.indeed.com", title: "job", description: "a job"}
+  @invalid_attrs %{title: "invalid"}
+
+  defp job_count(query), do: Repo.one(from v in query, select: count(v.id))
+
+
   setup %{conn: conn} = config do
     if username = config[:login_as] do
       user = insert_user(username: username)
@@ -12,7 +19,7 @@ defmodule Wynterque.JobpostControllerTest do
   end
 
   @tag login_as: "max"
-  test "lists all user's videos on index", %{conn: conn, user: user} do
+  test "lists all user's jobposts on index", %{conn: conn, user: user} do
     user_jobpost = insert_jobpost(user, title: "Javascript Developer")
     other_jobpost = insert_jobpost(insert_user(username: "other"), title: "another job")
 
@@ -20,6 +27,21 @@ defmodule Wynterque.JobpostControllerTest do
     assert html_response(conn, 200) =~ ~r/Job Postings/
     assert String.contains?(conn.resp_body, user_jobpost.title)
     refute String.contains?(conn.resp_body, other_jobpost.title)
+  end
+
+  @tag login_as: "max"
+  test "creates user jobpost and redirects", %{conn: conn, user: user} do
+    conn = post conn, jobpost_path(conn, :create), jobpost: @valid_attrs
+    assert redirected_to(conn) == jobpost_path(conn, :index)
+    assert Repo.get_by!(Jobpost, @valid_attrs).user_id == user.id
+  end
+
+  @tag login_as: "max"
+  test "does not create video and renders errors when invalid", %{conn: conn} do
+    count_before = job_count(Jobpost)
+    conn = post conn, jobpost_path(conn, :create), jobpost: @invalid_attrs
+    assert html_response(conn, 200) =~ "check the errors"
+    assert job_count(Jobpost) == count_before
   end
 
   test "requires user authentication on all actions", %{conn: conn} do
