@@ -3,7 +3,7 @@ defmodule Wynterque.JobpostTest do
 
   alias Wynterque.Jobpost
 
-  @valid_attrs %{" title": "some content", contact: "some content", description: "some content", email: "some content", location: "some content", organization: "some content", url: "some content"}
+  @valid_attrs %{title: "some content", contact: "some content", description: "some content", email: "some content", location: "some content", organization: "some content", url: "some content"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
