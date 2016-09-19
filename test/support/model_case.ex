@@ -21,6 +21,7 @@ defmodule Wynterque.ModelCase do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
+      import Wynterque.TestHelpers
       import Wynterque.ModelCase
     end
   end
