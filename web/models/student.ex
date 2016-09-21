@@ -5,6 +5,7 @@ defmodule Wynterque.Student do
     field :name, :string
     field :email, :string
     field :github, :string
+    field :ex_id, :string
 
     timestamps()
   end
